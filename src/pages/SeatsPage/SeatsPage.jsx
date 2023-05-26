@@ -1,7 +1,10 @@
 import styled from "styled-components"
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 export default function SeatsPage() {
-
+    const {idFilmes} = useParams()
+    console.log(idFilmes);
+    const sessaoFilme = axios.get()
     return (
         <PageContainer>
             Selecione o(s) assento(s)
