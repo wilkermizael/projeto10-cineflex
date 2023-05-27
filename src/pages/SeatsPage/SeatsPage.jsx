@@ -1,10 +1,25 @@
 import styled from "styled-components"
-import { useParams } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+//import { useState } from "react";
+//import { useEffect, useParams } from "react";
 export default function SeatsPage() {
+    /*const [informacoes , setInformacoes] = useState('')
     const {idFilmes} = useParams()
-    console.log(idFilmes);
-    const sessaoFilme = axios.get()
+    
+    useEffect(()=>{
+        const sessaoFilme = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilmes}/showtimes`)
+        sessaoFilme.then( resposta =>{
+            setInformacoes(resposta.data);
+            console.log(resposta.data)
+        })
+        sessaoFilme.catch(erro =>{
+            if(erro.response){
+            console.log("Deu erro")}
+        })
+    },[idFilmes])*/
+    
+   
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
@@ -44,10 +59,10 @@ export default function SeatsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={"https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg"} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
+                    <p>Titulo do Filme</p>
                     <p>Sexta - 14h00</p>
                 </div>
             </FooterContainer>
