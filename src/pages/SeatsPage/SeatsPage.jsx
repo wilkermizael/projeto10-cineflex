@@ -1,22 +1,29 @@
 import styled from "styled-components"
-//import axios from "axios";
-//import { useState } from "react";
-//import { useEffect, useParams } from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect} from "react";
+import { useParams } from "react-router-dom";
 export default function SeatsPage() {
-    /*const [informacoes , setInformacoes] = useState('')
-    const {idFilmes} = useParams()
-    
+    const [assentos , setAssentos] = useState([])
+    const [movie, setMovie] = useState([])
+    const [day, setDay] = useState([])
+    const [hours, setHours] = useState([])
+    const {idSeats} = useParams()
+
     useEffect(()=>{
-        const sessaoFilme = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilmes}/showtimes`)
-        sessaoFilme.then( resposta =>{
-            setInformacoes(resposta.data);
-            console.log(resposta.data)
+        const assentosFilme = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSeats}/seats`)
+        assentosFilme.then( resposta =>{
+            setAssentos(resposta.data.seats);
+            setMovie(resposta.data.movie)
+            setDay(resposta.data.day)
+            setHours(resposta.data.name)
+            console.log(resposta.data.name)
         })
-        sessaoFilme.catch(erro =>{
+        assentosFilme.catch(erro =>{
             if(erro.response){
             console.log("Deu erro")}
         })
-    },[idFilmes])*/
+    },[idSeats])
     
    
 
@@ -25,11 +32,9 @@ export default function SeatsPage() {
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                
+                {assentos.map(item => <div key={item.id}><SeatItem >{item.name}</SeatItem></div>)}
+                
             </SeatsContainer>
 
             <CaptionContainer>
@@ -58,13 +63,17 @@ export default function SeatsPage() {
             </FormContainer>
 
             <FooterContainer>
-                <div>
-                    <img src={"https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Titulo do Filme</p>
-                    <p>Sexta - 14h00</p>
-                </div>
+                
+                    <div>
+                        <img src={movie.posterURL} alt="poster" />
+                    </div>
+                    
+                    <div>
+                        <p>{movie.title}</p>
+                        <p> {day.weekday} -{hours}</p>
+                    </div>
+    
+               
             </FooterContainer>
 
         </PageContainer>

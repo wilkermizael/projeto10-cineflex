@@ -13,8 +13,8 @@ export default function App() {
            <NavContainer>CINEFLEX</NavContainer>
             <Routes>
                 <Route path="/" element ={<HomePage />} />
-                {/*<Route path="sessoes/:idFilmes" element={<SeatsPage />} />*/}
                 <Route  path="sessoes/:idFilmes" element={<SessionsPage /> } />
+                <Route path="seats/:idSeats" element={<SeatsPage />} />
                 {/* <SuccessPage /> */}
             </Routes>
         </BrowserRouter>

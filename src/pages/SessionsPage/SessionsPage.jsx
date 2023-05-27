@@ -2,10 +2,12 @@ import styled from "styled-components"
 import { useEffect} from "react"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios"
 export default function SessionsPage() {
     const [informacoes , setInformacoes] = useState('')
     const [data, setData] = useState([])
+    let [idSessao, setIdSessao] = useState(0)
     const {idFilmes} = useParams()
     
     useEffect(()=>{
@@ -13,14 +15,19 @@ export default function SessionsPage() {
         sessaoFilme.then( resposta =>{
             setInformacoes(resposta.data);
             setData(resposta.data.days)
-            //console.log(informacoes.days[0].weekday)
+            
         })
         sessaoFilme.catch(erro =>{
             if(erro.response){
             console.log("Deu erro")}
         })
     },[idFilmes])
-      
+      //console.log(data.showtimes[0])
+      function clicado(idDaSessao){
+          setIdSessao(idDaSessao)
+          console.log(idDaSessao)
+      }
+     //console.log(idSessao)
     return (
         <PageContainer>
             Selecione o horário
@@ -29,10 +36,19 @@ export default function SessionsPage() {
                 <div key={item.date}>
                 <SessionContainer key={item.date}>
                     {item.weekday} - {item.date}
-                    <ButtonsContainer>
-                        <button>{item.showtimes[0].name}</button>
-                        <button>{item.showtimes[1].name}</button>
-                    </ButtonsContainer>
+                    
+                        <ButtonsContainer>
+                            
+                            <Link to={`/seats/${item.showtimes[0].id}`}>
+                                <button onClick={()=>clicado(item.showtimes[0].id)}>{item.showtimes[0].name}</button>
+                            </Link> 
+                            
+                            <Link to={`/seats/${item.showtimes[1].id}`}>
+                                <button onClick ={()=>clicado(item.showtimes[1].id)}>{item.showtimes[1].name}</button>
+                            </Link> 
+                             
+                        </ButtonsContainer>
+                    
                 </SessionContainer>
                 </div>
                  )}
