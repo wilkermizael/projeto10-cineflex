@@ -9,6 +9,12 @@ export default function SeatsPage() {
     const [day, setDay] = useState([])
     const [hours, setHours] = useState([])
     const {idSeats} = useParams()
+    //const [lugarReservado, setLugarReservado] = useState([])
+    const [nome, setNome] = useState('')
+    const [cpf, setCpf] = useState('');
+    const [corSelecionada, setcorSelecionada] = useState('#C3CFD9')
+    const meulugar = [];
+    let dados=[];
 
     useEffect(()=>{
         const assentosFilme = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSeats}/seats`)
@@ -17,7 +23,7 @@ export default function SeatsPage() {
             setMovie(resposta.data.movie)
             setDay(resposta.data.day)
             setHours(resposta.data.name)
-            console.log(resposta.data.name)
+            console.log(resposta.data.seats)
         })
         assentosFilme.catch(erro =>{
             if(erro.response){
@@ -25,41 +31,62 @@ export default function SeatsPage() {
         })
     },[idSeats])
     
-   
+    function escolhaSeat(lugar){
+        
+        meulugar.push(lugar);
+        setcorSelecionada('#1AAE9E')
+        
+    }
 
+    function login(event){
+        //setLugarReservado([...meulugar])
+        console.log (meulugar)
+        event.preventDefault();
+        
+        //console.log(lugarReservado)
+        dados= {
+            ids:meulugar,
+            name:nome,
+            cpf:cpf
+        }
+        console.log(dados)
+        axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', dados)
+
+    }
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
                 
-                {assentos.map(item => <div key={item.id}><SeatItem >{item.name}</SeatItem></div>)}
-                
+                {assentos.map(item => <div key={item.id}><SeatItem cor={corSelecionada} onClick={()=>escolhaSeat(item.id)} >{item.name}</SeatItem></div>)}
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle corFundo={'#1AAE9E'}/>
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle corFundo={'lightblue'}/>
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle corFundo={'#FBE192'}/>
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+            <FormContainer onSubmit={login}>
+                
+                    <label htmlFor="meunome">Nome do Comprador:</label>
+                    <input type={'text'} id='meunome' required value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Digite seu nome..." />
 
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                    <label htmlFor="senha"> CPF do Comprador:</label>
+                    <input type={'password'} id='senha' required value={cpf} onChange={ e => setCpf(e.target.value)} placeholder="Digite seu CPF..." />
 
-                <button>Reservar Assento(s)</button>
+                    <button type="submit" >Reservar Assento(s)</button>
+                
             </FormContainer>
 
             <FooterContainer>
@@ -101,7 +128,7 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
     flex-direction: column;
@@ -124,7 +151,8 @@ const CaptionContainer = styled.div`
 `
 const CaptionCircle = styled.div`
     border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    background-color: ${props => props.corFundo};
+    //background-color: lightblue;    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -138,10 +166,11 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
+    
 `
-const SeatItem = styled.div`
+const SeatItem = styled.button`
     border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    background-color: ${props => props.cor};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;

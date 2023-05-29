@@ -25,7 +25,7 @@ export default function SessionsPage() {
       //console.log(data.showtimes[0])
       function clicado(idDaSessao){
           setIdSessao(idDaSessao)
-          console.log(idDaSessao)
+          console.log(idSessao)
       }
      //console.log(idSessao)
     return (
