@@ -4,7 +4,6 @@ import { Link} from "react-router-dom"
 import { useState } from "react"
 import { useEffect } from "react"
 export default function HomePage() {
-
     const [filmes, setFilmes] = useState([])
     
    
@@ -12,7 +11,7 @@ export default function HomePage() {
         const requisao = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         requisao.then( resposta =>{
             setFilmes(resposta.data);
-           
+           console.log(resposta.data)
         })
     },[])
     if( filmes.length === 0){
@@ -28,7 +27,7 @@ export default function HomePage() {
                 
                 <Link to={`/sessoes/${item.id}`} key={item.id}>
                 <MovieContainer >
-                    <img src={item.posterURL} alt="poster"/>
+                    <img data-test='movie' src={item.posterURL} alt="poster"/>
                 </MovieContainer>
                 </Link>
                 )}

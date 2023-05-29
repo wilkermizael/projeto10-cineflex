@@ -31,20 +31,20 @@ export default function SessionsPage() {
     return (
         <PageContainer>
             Selecione o horário
-            <div>
+            <div >
                 {data.map((item) =>
-                <div key={item.date}>
+                <div data-test="movie-day" key={item.date}>
                 <SessionContainer key={item.date}>
                     {item.weekday} - {item.date}
                     
                         <ButtonsContainer>
                             
                             <Link to={`/seats/${item.showtimes[0].id}`}>
-                                <button onClick={()=>clicado(item.showtimes[0].id)}>{item.showtimes[0].name}</button>
+                                <button data-test="showtime" onClick={()=>clicado(item.showtimes[0].id)}>{item.showtimes[0].name}</button>
                             </Link> 
                             
                             <Link to={`/seats/${item.showtimes[1].id}`}>
-                                <button onClick ={()=>clicado(item.showtimes[1].id)}>{item.showtimes[1].name}</button>
+                                <button data-test="showtime" onClick ={()=>clicado(item.showtimes[1].id)}>{item.showtimes[1].name}</button>
                             </Link> 
                              
                         </ButtonsContainer>
@@ -55,16 +55,18 @@ export default function SessionsPage() {
                 
         
             </div>
-
+            <div data-test="footer">
             <FooterContainer>
-                <div>
+            
+                <div >
                     <img src={informacoes.posterURL} alt="poster" />
                 </div>
                 <div>
                     <p>{informacoes.title}</p>
                 </div>
+            
             </FooterContainer>
-
+            </div>
         </PageContainer>
     )
 }

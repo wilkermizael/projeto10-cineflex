@@ -1,31 +1,45 @@
+/* eslint-disable react/prop-types */
+
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage() {
-
+export default function SuccessPage(props) {
+    // eslint-disable-next-line react/prop-types
+    const {reserva} = props
+    const Navigate = useNavigate()
+    console.log(reserva)
+    function voltarParaHome(){
+        Navigate('/')
+    }
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
+            <div data-test="movie-info">
+                <TextContainer>
+                    <strong><p>Filme e sessão</p></strong>
+                    <p>{reserva.filme}</p>
+                    <p>{reserva.data} - {reserva.hora}</p>
+                </TextContainer>
+            </div>
+            
+            <div data-test="seats-info">
+                <TextContainer>
+                    <strong><p>Ingressos</p></strong>
+                    {reserva.assentos.map(item =><p key={item}>Assento: {item}</p> )}
+                
+                </TextContainer>
+            </div>
+            
+            <div data-test="client-info">
+                <TextContainer>
+                    <strong><p>Comprador</p></strong>
+                    <p>Nome: {reserva.nomeComprador}</p>
+                    <p>CPF: {reserva.cpf}</p>
+                </TextContainer>
+            </div>
+            
+            <button data-test="go-home-btn" onClick={voltarParaHome}>Voltar para Home</button>
 
-            <TextContainer>
-                <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
-            </TextContainer>
-
-            <TextContainer>
-                <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
-            </TextContainer>
-
-            <TextContainer>
-                <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
-            </TextContainer>
-
-            <button>Voltar para Home</button>
         </PageContainer>
     )
 }
